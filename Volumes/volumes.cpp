@@ -90,7 +90,7 @@ int SDL_main(int argc, char **argv)
     SDL_Renderer *renderer;
     SDL_Window *window;
 
-    LOG_INFO("test");
+    LOG_INFO("start test");
     
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_WIDTH, 0, &window, &renderer);
@@ -113,5 +113,6 @@ int SDL_main(int argc, char **argv)
     SDL_DestroyWindow(window);
     SDL_Quit();
 
+    LOG_INFO("end test");
     return EXIT_SUCCESS;
 }
