@@ -14,9 +14,9 @@ double deg2rad(double angleDeg)
     return angleDeg * M_PI / 180.0;
 }
 
-void render(SDL_Renderer* renderer, double angleView)
+void render(SDL_Renderer *renderer, double angleView)
 {
-        const char* profile[] = {
+    const char *profile[] = {
         "xxxxxx",
         "xxxxxxx",
         "xxxxxxxx",
@@ -41,10 +41,9 @@ void render(SDL_Renderer* renderer, double angleView)
         "xxxxxxx",
         "xxx",
         "xxx",
-        0
-    };
+        0};
 
-    #define NB_ROWS 20
+#define NB_ROWS 20
     int rowId = 1;
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -69,19 +68,18 @@ void render(SDL_Renderer* renderer, double angleView)
             int x2_l2 = WINDOW_WIDTH / 2.0 + width_l2 * cos(deg2rad(i + ANGLE_STEP));
             int y2_l2 = y + rowHeight + width_l2 * sin(deg2rad(i + ANGLE_STEP)) * sin(deg2rad(angleView));
             SDL_Point points[5] =
-            {
-                {x1_l1, y1_l1},
-                {x2_l1, y2_l1},
-                {x2_l2, y2_l2},
-                {x1_l2, y1_l2},
-                {x1_l1, y1_l1}
-            };
+                {
+                    {x1_l1, y1_l1},
+                    {x2_l1, y2_l1},
+                    {x2_l2, y2_l2},
+                    {x1_l2, y1_l2},
+                    {x1_l1, y1_l1}};
             SDL_RenderDrawLines(renderer, points, sizeof(points) / sizeof(SDL_Point));
         }
         y += rowHeight;
         rowId++;
     } while (profile[rowId]);
-    
+
     SDL_RenderPresent(renderer);
 }
 int SDL_main(int argc, char **argv)
@@ -91,12 +89,13 @@ int SDL_main(int argc, char **argv)
     SDL_Window *window;
 
     LOG_INFO("start test");
-    
+
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_WIDTH, 0, &window, &renderer);
 
     double angleView = 360.0;
-    while (1) {
+    while (1)
+    {
         render(renderer, angleView);
         if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
             break;
@@ -106,7 +105,6 @@ int SDL_main(int argc, char **argv)
             angleView = 360.0;
         }
         Sleep(10);
-
     }
 
     SDL_DestroyRenderer(renderer);

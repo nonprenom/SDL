@@ -31,16 +31,14 @@ int Window::close()
 	int rc = 0;
 
 	SDL_DestroyRenderer(m_renderer);
-    SDL_DestroyWindow(m_window);
-    SDL_Quit();
+	SDL_DestroyWindow(m_window);
+	SDL_Quit();
 
 	LOG_INFO("Window closed correctly");
 	return rc;
 }
 
-
 Window::~Window()
 {
 	close();
 }
-
