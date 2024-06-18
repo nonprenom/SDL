@@ -87,15 +87,16 @@ void render(SDL_Renderer *renderer, double angleView)
 int SDL_main(int argc, char **argv)
 {
     Window win(WINDOW_WIDTH, WINDOW_WIDTH);
+	SDL_Event event;
 
     win.open();
     
     double angleView = 360.0;
     while (1)
     {
-        render(win.getRender(), angleView);
-        if (SDL_PollEvent(&win.getEvent()) && win.getEvent().type == SDL_QUIT)
+        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
             break;
+        render(win.getRender(), angleView);
         angleView--;
         if (angleView < 0.0)
         {

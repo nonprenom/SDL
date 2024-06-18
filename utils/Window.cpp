@@ -32,7 +32,6 @@ void Window::close()
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 
-	m_event = {};
 	m_renderer = nullptr;
 	m_window = nullptr;
 
