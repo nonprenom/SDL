@@ -1,4 +1,4 @@
-#include "SDL_error.h"
+#include <SDL_error.h>
 #include "Window.h"
 #include "Logger.h"
 
@@ -26,19 +26,23 @@ int Window::open()
 	return rc;
 }
 
-int Window::close()
+void Window::close()
 {
-	int rc = 0;
-
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 
+	m_event = {};
+	m_renderer = nullptr;
+	m_window = nullptr;
+
 	LOG_INFO("Window closed correctly");
-	return rc;
 }
 
 Window::~Window()
 {
-	close();
+	if (m_window != nullptr)
+	{
+		close();
+	}
 }

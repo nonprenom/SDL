@@ -14,13 +14,17 @@ SDL2LDFLAGS=$(shell ${WINDOWS_SDK_SDL_LIB}/bin/sdl2-config --static-libs)
 SDLPROJECTROOT=/home/erwanei/src/win/SDL
 INCS=-I${SDLPROJECTROOT}/utils
 
-volumes : volumes.cpp Logger.o
-	${CXX} volumes.cpp -o ${WINOUTPUTDIR}/test.exe ${CXXFLAGS} ${SDL2FLAGS} ${INCS} ${SDL2LDFLAGS} ${CXXLDFLAGS} Logger.o
-	ln -fs ${WINOUTPUTDIR}/test.exe test.exe
+volumes : volumes.cpp Logger.o Window.o
+	${CXX} volumes.cpp -o test.exe ${CXXFLAGS} ${SDL2FLAGS} ${INCS} ${SDL2LDFLAGS} ${CXXLDFLAGS} Logger.o Window.o
+	mv -fv test.exe ${WINOUTPUTDIR}/test.exe
+	ln -fvs ${WINOUTPUTDIR}/test.exe test.exe
 
 Logger.o : ${SDLPROJECTROOT}/utils/Logger.cpp ${SDLPROJECTROOT}/utils/Logger.h
 	${CXX} -c ${SDLPROJECTROOT}/utils/Logger.cpp ${CXXFLAGS} ${INCS}
 
+Window.o : ${SDLPROJECTROOT}/utils/Window.cpp ${SDLPROJECTROOT}/utils/Window.h
+	${CXX} -c ${SDLPROJECTROOT}/utils/Window.cpp ${CXXFLAGS} ${SDL2FLAGS} ${INCS}
+
 clean: 
-	rm "$(shell readlink -f test.exe)"
-	rm -f test.exe
+	rm -fv "$(shell readlink -f test.exe)"
+	rm -fv test.exe *.o

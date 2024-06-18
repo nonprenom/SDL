@@ -4,6 +4,7 @@
 #include <windows.h>
 
 #include "Logger.h"
+#include "Window.h"
 
 #define WINDOW_WIDTH 1000.0
 #define ANGLE_STEP 10.0
@@ -82,22 +83,18 @@ void render(SDL_Renderer *renderer, double angleView)
 
     SDL_RenderPresent(renderer);
 }
+
 int SDL_main(int argc, char **argv)
 {
-    SDL_Event event;
-    SDL_Renderer *renderer;
-    SDL_Window *window;
+    Window win(WINDOW_WIDTH, WINDOW_WIDTH);
 
-    LOG_INFO("start test");
-
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_WIDTH, 0, &window, &renderer);
-
+    win.open();
+    
     double angleView = 360.0;
     while (1)
     {
-        render(renderer, angleView);
-        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
+        render(win.getRender(), angleView);
+        if (SDL_PollEvent(&win.getEvent()) && win.getEvent().type == SDL_QUIT)
             break;
         angleView--;
         if (angleView < 0.0)
@@ -107,10 +104,8 @@ int SDL_main(int argc, char **argv)
         Sleep(10);
     }
 
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    LOG_DBG("test");
+    win.close();
 
-    LOG_INFO("end test");
     return EXIT_SUCCESS;
 }
