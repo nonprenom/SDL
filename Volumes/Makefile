@@ -2,7 +2,7 @@
 CXX=x86_64-w64-mingw32-g++
 CXXFLAGS=-std=c++11 -Wall -pedantic -Werror -Wshadow -Wstrict-aliasing -Wstrict-overflow -Os
 # to compile with mingw libstd in static
-CXXLDFLAGS=-s -static -lmingw32 -static-libgcc -static-libstdc++ -mconsole -mwindows # -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive
+CXXLDFLAGS=-s -static -lmingw32 -static-libgcc -static-libstdc++ -pthread -mconsole -mwindows  # -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive
 # wil output the binaries in this diretory to avoid problem with the anti-virus
 WINOUTPUTDIR=/mnt/c/Essence_SC/tmp
 

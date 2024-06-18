@@ -1,17 +1,19 @@
 #include <cstdarg>
 #include <cstdio>
-#include <time.h>
+#include <ctime>
 
 #include "Logger.h"
 
 void Logger::log(const char *logType, const char *sourceFile, const int sourceLine, const char *fmt, ...)
 {
-	time_t rawTime = time(NULL);
-	struct tm *timeinfo = localtime(&rawTime);
-	char buff[80];
+	struct timespec ts;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	struct tm *timeinfo = localtime(&ts.tv_sec);
 
-	strftime(buff, 80, "%d/%m/%y %H:%M:%S", timeinfo);
-	fprintf(stdout, "%s [%-6s] (%s:%d) ", buff, logType, sourceFile, sourceLine);
+	char buff[100];
+
+	strftime(buff, sizeof(buff), "%d/%m/%y %H:%M:%S", timeinfo);
+	fprintf(stdout, "%s.%03ld [%-6s] (%s:%d) ", buff, ts.tv_nsec / 1000000, logType, sourceFile, sourceLine);
 	va_list args;
 	va_start(args, fmt);
 	fprintf(stdout, fmt, args);
