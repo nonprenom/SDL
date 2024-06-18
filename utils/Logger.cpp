@@ -13,10 +13,13 @@ void Logger::log(const char *logType, const char *sourceFile, const int sourceLi
 	char buff[100];
 
 	strftime(buff, sizeof(buff), "%d/%m/%y %H:%M:%S", timeinfo);
-	fprintf(stdout, "%s.%03ld [%-6s] (%s:%d) ", buff, ts.tv_nsec / 1000000, logType, sourceFile, sourceLine);
+	fprintf(stdout, "%s.%03ld [%-6s] (%s:%d)", buff, ts.tv_nsec / 1000000, logType, sourceFile, sourceLine);
+
 	va_list args;
 	va_start(args, fmt);
-	fprintf(stdout, fmt, args);
+	char buffer[1024];
+	vsnprintf(buffer, 1024, fmt, args);
+	fprintf(stdout, buffer);
 	va_end(args);
 	fprintf(stdout, "\r\n");
 }

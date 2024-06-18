@@ -21,7 +21,6 @@ int Window::open()
 		return rc;
 	}
 
-	SDL_RaiseWindow(m_window);
 	LOG_INFO("New window opened correctly");
 	return rc;
 }

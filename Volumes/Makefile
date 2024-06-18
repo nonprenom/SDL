@@ -32,7 +32,7 @@ ${BUILDDIR}/Window.o : ${UTILSDIR}/Window.cpp ${UTILSDIR}/Window.h
 ${BUILDDIR} :
 	mkdir ${BUILDDIR}/
 
-install:
+install: ${BUILDDIR}/${EXECUTABLE}
 	cp -fv ${BUILDDIR}/${EXECUTABLE} ${WINOUTPUTDIR}/${EXECUTABLE}
 	ln -fvs ${WINOUTPUTDIR}/${EXECUTABLE} ${EXECUTABLE}
 

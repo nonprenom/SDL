@@ -84,6 +84,10 @@ void render(SDL_Renderer *renderer, double angleView)
     SDL_RenderPresent(renderer);
 }
 
+void eventHandler(const SDL_Event* event)
+{
+}
+
 int SDL_main(int argc, char **argv)
 {
     Window win(WINDOW_WIDTH, WINDOW_WIDTH);
@@ -94,18 +98,27 @@ int SDL_main(int argc, char **argv)
     double angleView = 360.0;
     while (1)
     {
-        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
-            break;
+        if (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+            {
+                break;
+            }
+            else
+            {
+                eventHandler(&event);
+            }
+            
+        }
         render(win.getRender(), angleView);
         angleView--;
         if (angleView < 0.0)
         {
             angleView = 360.0;
         }
-        Sleep(10);
+        SDL_Delay(10);
     }
 
-    LOG_DBG("test");
     win.close();
 
     return EXIT_SUCCESS;
