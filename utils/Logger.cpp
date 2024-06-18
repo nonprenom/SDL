@@ -11,7 +11,7 @@ void Logger::log(const char *logType, const char *sourceFile, const int sourceLi
 	char buff[80];
 
 	strftime(buff, 80, "%d/%m/%y %H:%M:%S", timeinfo);
-	fprintf(stdout, "%s [%s]\t (%s:%d) ", buff, logType, sourceFile, sourceLine);
+	fprintf(stdout, "%s [%-6s] (%s:%d) ", buff, logType, sourceFile, sourceLine);
 	va_list args;
 	va_start(args, fmt);
 	fprintf(stdout, fmt, args);

@@ -11,19 +11,22 @@ WINDOWS_SDK_SDL_LIB=/opt/windows/SDL2-2.30.3/x86_64-w64-mingw32
 SDL2FLAGS=$(shell ${WINDOWS_SDK_SDL_LIB}/bin/sdl2-config --cflags)
 SDL2LDFLAGS=$(shell ${WINDOWS_SDK_SDL_LIB}/bin/sdl2-config --static-libs)
 
-SDLPROJECTROOT=/home/erwanei/src/win/SDL
-INCS=-I${SDLPROJECTROOT}/utils
+# Utils
+UTILSDIR=../utils
+
+
+INCS=-I${UTILSDIR}
 
 volumes : volumes.cpp Logger.o Window.o
 	${CXX} volumes.cpp -o test.exe ${CXXFLAGS} ${SDL2FLAGS} ${INCS} ${SDL2LDFLAGS} ${CXXLDFLAGS} Logger.o Window.o
 	mv -fv test.exe ${WINOUTPUTDIR}/test.exe
 	ln -fvs ${WINOUTPUTDIR}/test.exe test.exe
 
-Logger.o : ${SDLPROJECTROOT}/utils/Logger.cpp ${SDLPROJECTROOT}/utils/Logger.h
-	${CXX} -c ${SDLPROJECTROOT}/utils/Logger.cpp ${CXXFLAGS} ${INCS}
+Logger.o : ${UTILSDIR}/Logger.cpp ${UTILSDIR}/Logger.h
+	${CXX} -c ${UTILSDIR}/Logger.cpp ${CXXFLAGS} ${INCS}
 
-Window.o : ${SDLPROJECTROOT}/utils/Window.cpp ${SDLPROJECTROOT}/utils/Window.h
-	${CXX} -c ${SDLPROJECTROOT}/utils/Window.cpp ${CXXFLAGS} ${SDL2FLAGS} ${INCS}
+Window.o : ${UTILSDIR}/Window.cpp ${UTILSDIR}/Window.h
+	${CXX} -c ${UTILSDIR}/Window.cpp ${CXXFLAGS} ${SDL2FLAGS} ${INCS}
 
 clean: 
 	rm -fv "$(shell readlink -f test.exe)"
