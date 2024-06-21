@@ -1,0 +1,6 @@
+; configuration file
+[Logger]
+Console=true
+File=true
+;Filename=test.log
+

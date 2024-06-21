@@ -1,4 +1,5 @@
 BUILDDIR=.build
+OUTPUTDIR=./out
 EXECUTABLE=volumes.exe
 
 # Mingw cfg
@@ -26,17 +27,17 @@ ${BUILDDIR}/${EXECUTABLE} : ${BUILDDIR} volumes.cpp ${BUILDDIR}/Logger.o ${BUILD
 ${BUILDDIR}/Logger.o : ${UTILSDIR}/Logger.cpp ${UTILSDIR}/Logger.h
 	${CXX} -c ${UTILSDIR}/Logger.cpp -o ${BUILDDIR}/Logger.o ${CXXFLAGS} ${INCS}
 
-${BUILDDIR}/Window.o : ${UTILSDIR}/Window.cpp ${UTILSDIR}/Window.h
+${BUILDDIR}/Window.o : ${UTILSDIR}/Window.cpp ${UTILSDIR}/Window.h ${BUILDDIR}/Logger.o
 	${CXX} -c ${UTILSDIR}/Window.cpp -o ${BUILDDIR}/Window.o ${CXXFLAGS} ${SDL2FLAGS} ${INCS}
 
 ${BUILDDIR} :
 	mkdir ${BUILDDIR}/
 
 install: ${BUILDDIR}/${EXECUTABLE}
-	cp -fv ${BUILDDIR}/${EXECUTABLE} ${WINOUTPUTDIR}/${EXECUTABLE}
-	ln -fvs ${WINOUTPUTDIR}/${EXECUTABLE} ${EXECUTABLE}
+	ln -fvns ${WINOUTPUTDIR} ${OUTPUTDIR}
+	cp -fv ${BUILDDIR}/${EXECUTABLE} ${OUTPUTDIR}/${EXECUTABLE}
 
 clean: 
-	rm -fv "$(shell readlink -f ${EXECUTABLE})"
-	rm -fv ${EXECUTABLE}
+	rm -fv ${OUTPUTDIR}/*
+	rm -fv ${OUTPUTDIR}
 	rm -rfv ${BUILDDIR}/

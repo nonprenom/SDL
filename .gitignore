@@ -2,3 +2,4 @@
 *.o
 .vscode
 SDL_includes
+Volumes/out
